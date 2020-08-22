@@ -3,24 +3,47 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>xxxxx</title>
   </head>
   <body>
     <script>
       getData();
       async function getData() {
         const response = await fetch('./assets/csv/lw2-2108.csv');
-        //const response = await fetch('./assets/csv/test.csv');
-        const data = await response.text();
-        console.log(data);
+        // const response = await fetch('./assets/csv/test.csv');
+        const uft16Data = await response.text();
 
-        //const replaced = data.replace(/\n/g, 'TEST');
+        //Braindead decoder that assumes fully valid input
+        function decodeUTF16LE(utf16Str) {
+          var cp = [];
+          for (var i = 0; i < utf16Str.length; i += 2) {
+            cp.push(utf16Str.charCodeAt(i) | (utf16Str.charCodeAt(i + 1) << 8));
+          }
+
+          return String.fromCharCode.apply(String, cp);
+        }
+
+        //console.log(decodeUTF16LE(data));
+
+        // var base64decode = atob; //In chrome and firefox, atob is a native method available for base64 decoding
+
+        var data = decodeUTF16LE(uft16Data);
+
+        console.log('result: ' + data);
+
+        // //const replaced = data.replace(/\n/g, 'TEST');
         const table = data.split(/\n/g).slice(1);
-        console.log(table);
+        // console.log(table);
 
         table.forEach((row) => {
           const columns = row.split(/\t/);
-          console.log(columns);
+          //console.log(columns);
+          const name = columns[0];
+          //console.log(name);
+
+          const p = document.createElement('p');
+          p.append(name);
+          document.querySelector('body').appendChild(p);
         });
       }
     </script>
