@@ -5,5 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-  <body></body>
+  <body>
+    <script>
+      getData();
+      async function getData() {
+        const response = await fetch('./assets/csv/lw2-2108.csv');
+        //const response = await fetch('./assets/csv/test.csv');
+        const data = await response.text();
+        console.log(data);
+
+        //const replaced = data.replace(/\n/g, 'TEST');
+        const table = data.split(/\n/g).slice(1);
+        console.log(table);
+
+        table.forEach((row) => {
+          const columns = row.split(/\t/);
+          console.log(columns);
+        });
+      }
+    </script>
+  </body>
 </html>
