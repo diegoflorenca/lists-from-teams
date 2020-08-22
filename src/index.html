@@ -6,18 +6,52 @@
     <title>xxxxx</title>
   </head>
   <body>
-    <form name="myForm" onsubmit="return getData();">
-      <input type="file" name="file" />
-      <button type="submit">Upload</button>
-    </form>
+    <!-- <form method="GET" onsubmit="prepare();return false">
+      <input type="file" name="file" id="csv-file" />
+      <button>Upload</button>
+    </form> -->
     <h1>Lista de Presença</h1>
     <h2></h2>
 
+    <hr />
+    <input type="file" id="file-input" />
+    <h3>Contents of the file:</h3>
+    <pre id="file-content"></pre>
+    <hr />
+
     <script>
-      const file = './assets/csv/lw2-2108.csv';
-      getData(file);
+      function readSingleFile(e) {
+        var file = e.target.files[0];
+        if (!file) {
+          return;
+        }
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          var contents = e.target.result;
+          let rows = contents.split(/\n/g);
+          console.log(rows);
+          displayContents(contents);
+        };
+        reader.readAsText(file);
+      }
+
+      function displayContents(contents) {
+        var element = document.getElementById('file-content');
+        element.textContent = contents;
+      }
+
+      document
+        .getElementById('file-input')
+        .addEventListener('change', readSingleFile, false);
+    </script>
+
+    <script>
+      // const file = './assets/csv/lw2-2108.csv';
+      //getData(file);
 
       async function getData(file) {
+        // let csvFile = document.getElementById('csv-file').files[0];
+
         const response = await fetch(file);
         // const response = await fetch('./assets/csv/test.csv');
         const uft16Data = await response.text();
