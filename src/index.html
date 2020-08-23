@@ -6,55 +6,27 @@
     <title>Lista de Presença</title>
   </head>
   <body>
-    <hr />
     <input type="file" id="file-input" />
-    <hr />
 
     <h1></h1>
     <h2 class="date"></h2>
     <h3 class="start"></h3>
     <h3 class="end"></h3>
     <ul></ul>
+    <button class="download">Download Excel</button>
 
     <script src="./js/moment.js"></script>
+    <script src="./js/xlsx.full.min.js"></script>
+    <script src="./js/FileSaver.min.js"></script>
     <script src="./app.js"></script>
     <script>
       document
         .getElementById('file-input')
         .addEventListener('change', changeFileHandler, false);
 
-      function getData(file) {
-        list.sort();
-
-        const tableElement = document.createElement('table');
-
-        list.forEach((name) => {
-          const trElement = document.createElement('tr');
-          // Name
-          const tdName = document.createElement('td');
-          const nameText = document.createTextNode(name);
-          tdName.appendChild(nameText);
-          trElement.appendChild(tdName);
-
-          tableElement.appendChild(trElement);
-        });
-
-        const body = document.querySelector('body');
-        body.appendChild(tableElement);
-
-        const h2 = document.querySelector('h2');
-        const h2Text = document.createTextNode(
-          `Data da reunião: ${date} - Início ${start} Fim ${end}`
-        );
-        h2.appendChild(h2Text);
-
-        const h3Element = document.createElement('h3');
-        const h3Text = document.createTextNode(
-          `Total de participantes: ${participants}`
-        );
-        h3Element.appendChild(h3Text);
-        body.appendChild(h3Element);
-      }
+      const downloadButton = document.querySelector('.download');
+      downloadButton.style.display = 'none';
+      downloadButton.addEventListener('click', createSheetHandler, false);
     </script>
   </body>
 </html>

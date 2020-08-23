@@ -69,6 +69,9 @@ const showResultHandler = (names, meetingDate, started, ended) => {
   const endEl = document.querySelector('.end');
   const ulEl = document.querySelector('ul');
 
+  // Show the download button
+  downloadButton.style.display = 'block';
+
   const start = `Início: ${started.format('HH:mm')}`;
   const end = `Término: ${ended.format('HH:mm')}`;
 
@@ -81,15 +84,14 @@ const showResultHandler = (names, meetingDate, started, ended) => {
   tableStructure.push([start, end]);
   tableStructure.push(['Presentes:']);
 
-  console.log(tableStructure);
-
   names.forEach((name) => {
+    const formatedName = nameFormatHandler(name);
     const li = document.createElement('li');
-    const nameText = document.createTextNode(name);
+    const nameText = document.createTextNode(formatedName);
     li.appendChild(nameText);
     ulEl.appendChild(li);
     // Insert this name into tableStructure
-    tableStructure.push([name]);
+    tableStructure.push([formatedName]);
   });
   // Total of names in the names array is equal to the total of participants of the meeting
   tableStructure.push(['Participantes', names.length]);
@@ -140,4 +142,27 @@ const saveToFileHandler = (name, wbout) => {
     new Blob([convertToOctet(wbout)], { type: 'application/octet-stream' }),
     fileName
   );
+};
+
+// Change the names case (First Letter)
+const nameFormatHandler = (nome) => {
+  // credits: Leo Caracciolo from https://pt.stackoverflow.com/questions/334820/javascript-valida%C3%A7%C3%A3o-de-nome-e-sobrenome-com-letras-mai%C3%BAsculas-no-in%C3%ADcio
+  nome = nome.toLowerCase().replace(/(?:^|\s)\S/g, function (capitalize) {
+    return capitalize.toUpperCase();
+  });
+
+  var PreposM = ['Da', 'De', 'Do', 'Das', 'Dos', 'A', 'E'];
+  var prepos = ['da', 'de', 'do', 'das', 'dos', 'a', 'e'];
+
+  for (var i = PreposM.length - 1; i >= 0; i--) {
+    nome = nome.replace(
+      RegExp(
+        '\\b' + PreposM[i].replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + '\\b',
+        'g'
+      ),
+      prepos[i]
+    );
+  }
+
+  return nome;
 };
