@@ -3,120 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>xxxxx</title>
+    <title>Lista de Presença</title>
   </head>
   <body>
-    <!-- <form method="GET" onsubmit="prepare();return false">
-      <input type="file" name="file" id="csv-file" />
-      <button>Upload</button>
-    </form> -->
-    <h1>Lista de Presença</h1>
-    <h2></h2>
-
     <hr />
     <input type="file" id="file-input" />
-    <h3>Contents of the file:</h3>
-    <pre id="file-content"></pre>
     <hr />
 
+    <h1></h1>
+    <h2 class="date"></h2>
+    <h3 class="start"></h3>
+    <h3 class="end"></h3>
+    <ul></ul>
+
+    <script src="./js/moment.js"></script>
+    <script src="./app.js"></script>
     <script>
-      function readSingleFile(e) {
-        var file = e.target.files[0];
-        if (!file) {
-          return;
-        }
-        var reader = new FileReader();
-        reader.onload = function (e) {
-          var contents = e.target.result;
-          let rows = contents.split(/\n/g);
-          console.log(rows);
-          displayContents(contents);
-        };
-        reader.readAsText(file);
-      }
-
-      function displayContents(contents) {
-        var element = document.getElementById('file-content');
-        element.textContent = contents;
-      }
-
       document
         .getElementById('file-input')
-        .addEventListener('change', readSingleFile, false);
-    </script>
+        .addEventListener('change', changeFileHandler, false);
 
-    <script>
-      // const file = './assets/csv/lw2-2108.csv';
-      //getData(file);
-
-      async function getData(file) {
-        // let csvFile = document.getElementById('csv-file').files[0];
-
-        const response = await fetch(file);
-        // const response = await fetch('./assets/csv/test.csv');
-        const uft16Data = await response.text();
-
-        //Braindead decoder that assumes fully valid input
-        function decodeUTF16LE(utf16Str) {
-          var cp = [];
-          for (var i = 0; i < utf16Str.length; i += 2) {
-            cp.push(utf16Str.charCodeAt(i) | (utf16Str.charCodeAt(i + 1) << 8));
-          }
-
-          return String.fromCharCode.apply(String, cp);
-        }
-
-        var data = decodeUTF16LE(uft16Data);
-
-        // //const replaced = data.replace(/\n/g, 'TEST');
-        const fullTable = data.split(/\n/g).slice(1);
-
-        // Remove blank lines
-        var table = fullTable.filter(
-          (value) => Object.keys(value).length !== 0
-        );
-
-        const list = [];
-        let date = '';
-        let participants = 0;
-        let start = '99:99:99';
-        let end = '00:00:00';
-
-        table.forEach((row) => {
-          const columns = row.split(/\t/);
-          const name = columns[0];
-          // const activity = columns[1];
-          const dateStr = columns[2].split(/\s/g);
-          date = dateStr[0];
-          const hour = dateStr[1];
-
-          let startTime = start.split(':');
-          let endTime = end.split(':');
-          let a = hour.split(':'); // split it at the colons
-
-          // minutes are worth 60 seconds. Hours are worth 60 minutes.
-          let thisSeconds = +a[0] * 60 * 60 + +a[1] * 60 + +a[2];
-
-          let startSeconds =
-            +startTime[0] * 60 * 60 + +startTime[1] * 60 + +startTime[2];
-          let endSeconds =
-            +endTime[0] * 60 * 60 + +endTime[1] * 60 + +endTime[2];
-
-          if (thisSeconds < startSeconds) {
-            start = hour;
-          }
-          if (thisSeconds > endSeconds) {
-            end = hour;
-          }
-
-          const hasName = list.some((element) => element === name);
-
-          if (!hasName) {
-            list.push(name);
-            participants++;
-          }
-        });
-
+      function getData(file) {
         list.sort();
 
         const tableElement = document.createElement('table');
