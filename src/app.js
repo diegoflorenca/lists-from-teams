@@ -68,6 +68,7 @@ const showResultHandler = (names, meetingDate, started, ended) => {
   const startEl = document.querySelector('.start');
   const endEl = document.querySelector('.end');
   const ulEl = document.querySelector('ul');
+  const participantsEl = document.querySelector('.participants');
 
   // Show the download button
   downloadButton.style.display = 'block';
@@ -93,6 +94,10 @@ const showResultHandler = (names, meetingDate, started, ended) => {
     // Insert this name into tableStructure
     tableStructure.push([formatedName]);
   });
+
+  // Print total of participants
+  participantsEl.innerHTML = `Total de Participantes: ${names.length}`;
+
   // Total of names in the names array is equal to the total of participants of the meeting
   tableStructure.push(['Participantes', names.length]);
 };
