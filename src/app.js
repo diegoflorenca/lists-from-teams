@@ -68,15 +68,18 @@ const showResultHandler = (names, meetingDate, started, ended) => {
   const startEl = document.querySelector('.start');
   const endEl = document.querySelector('.end');
   const ulEl = document.querySelector('ul');
-  const participantsEl = document.querySelector('.participants');
-  const dropFieldEl = document.querySelector('#dropField');
+  // const participantsEl = document.querySelector('.participants');
+  const wrapperEl = document.querySelector('#wrapper');
+  const listWrapperEl = document.querySelector('#listWrapper');
 
-  // Hide the file drop field
-  dropFieldEl.style.display = 'none';
+  // Hide the wrapper
+  wrapperEl.style.display = 'none';
   // Show the download button
   downloadButton.style.display = 'block';
   // Show back button
   reloadPage.style.display = 'block';
+  // Show wrapper around the list
+  listWrapperEl.style.display = 'flex';
 
   const start = `Início: ${started.format('HH:mm')}`;
   const end = `Término: ${ended.format('HH:mm')}`;
@@ -101,7 +104,13 @@ const showResultHandler = (names, meetingDate, started, ended) => {
   });
 
   // Print total of participants
-  participantsEl.innerHTML = `Total de Participantes: ${names.length}`;
+  const li = document.createElement('li');
+  li.classList.add('participants');
+  const liText = document.createTextNode(
+    `Total de Participantes: ${names.length}`
+  );
+  li.appendChild(liText);
+  ulEl.appendChild(li);
 
   // Total of names in the names array is equal to the total of participants of the meeting
   tableStructure.push(['Participantes', names.length]);

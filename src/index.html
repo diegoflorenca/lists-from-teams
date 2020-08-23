@@ -11,17 +11,36 @@
     />
   </head>
   <body>
-    <div id="wrapper">
-      <header>
-        <h1>Visualizar listagens do Microsoft Teams</h1>
-        <p>
-          Este site foi criado com a a intensão de facilitar a leitura das
-          listas de participantes das reuniões geradas pelo Teams
-        </p>
-      </header>
+    <header>
+      <h1>Listas do Microsoft Teams</h1>
+    </header>
 
-      <div class="files color" id="dropField">
-        <input name="file" type="file" id="file-input" />
+    <div id="wrapper">
+      <div id="left-column">
+        <div id="intro-text">
+          <h2>Seja bem-vindx!</h2>
+          <p>
+            Este site foi criado para facilitar a leitura das listas geradas
+            pela plataforma Teams da Microsoft.
+          </p>
+          <p>
+            Aqui é possível visualizar as listas de alunos em ordem alfabetica,
+            sem duplicidade e converter o resultado para uma planilha do excel.
+          </p>
+        </div>
+        <h3>Jogue o arquivo CSV aqui</h3>
+      </div>
+      <div id="right-column">
+        <div class="files color" id="dropField">
+          <input name="file" type="file" id="file-input" />
+        </div>
+      </div>
+    </div>
+
+    <div id="listWrapper">
+      <div id="buttons">
+        <button class="download"><img src="./icon/baixar.svg" /></button>
+        <button class="reloadPage">Voltar</button>
       </div>
 
       <section id="list">
@@ -31,13 +50,8 @@
           <h3 class="end"></h3>
         </div>
         <ul></ul>
-        <h3 class="participants"></h3>
+        <!-- <h3 class="participants"></h3> -->
       </section>
-
-      <div id="buttons">
-        <button class="reloadPage">Voltar</button>
-        <button class="download">Baixar para Excel</button>
-      </div>
     </div>
 
     <script src="./js/moment.js"></script>

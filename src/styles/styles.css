@@ -1,57 +1,256 @@
-/* Credit: ramniwassharma from https://bootsnipp.com/snippets/DOXy4 */
-
-.files input {
-  outline: 2px dashed #92b0b3;
-  outline-offset: -10px;
-  -webkit-transition: outline-offset 0.15s ease-in-out,
-    background-color 0.15s linear;
-  transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
-  padding: 120px 0px 85px 35%;
-  text-align: center !important;
+* {
   margin: 0;
-  width: 100% !important;
+  padding: 0;
+  box-sizing: border-box;
 }
-.files input:focus {
-  outline: 2px dashed #92b0b3;
-  outline-offset: -10px;
-  -webkit-transition: outline-offset 0.15s ease-in-out,
-    background-color 0.15s linear;
-  transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
-  border: 1px solid #92b0b3;
+
+html,
+body {
+  height: 100vh;
 }
-.files {
+
+body {
+  background: linear-gradient(45.34deg, #ea52f8 5.66%, #0066ff 94.35%);
+  font: normal 16px 'Roboto';
+  color: #3b3b3b;
+
+  display: grid;
+  place-items: center;
+}
+
+header {
+  background: #273038;
+  width: 100vw;
+  height: 20vh;
+  /* margin-bottom: 5vh; */
+  color: #fff;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 10px 20px -4px rgba(0, 0, 0, 0.29);
+  z-index: 10;
+}
+
+header h1 {
+  margin-left: 25px;
+}
+
+#wrapper {
+  width: 80vw;
+  max-width: 880px;
+  background: #f1eeff;
+  padding: 1.8rem 2rem;
+  border-radius: 0.8rem;
+  margin: 5vh 0;
+  height: 70vh;
+  box-shadow: 10px 10px 20px -4px rgba(0, 0, 0, 0.29);
+
+  display: flex;
+}
+
+#wrapper #left-column {
+  width: 50%;
+  padding-right: 40px;
+}
+
+#wrapper #left-column h2 {
+  margin-bottom: 25px;
+}
+
+#wrapper #left-column p {
+  margin-bottom: 25px;
+}
+
+#wrapper #left-column h3 {
   position: relative;
+  width: 240px;
+  font-size: 20px;
+  margin-top: 25%;
+  padding-top: 8px;
 }
-.files:after {
+
+#wrapper #left-column h3:after {
   pointer-events: none;
   position: absolute;
-  top: 60px;
-  left: 0;
+  top: 0;
   width: 50px;
-  right: 0;
-  height: 56px;
+  right: -60px;
+  height: 44px;
   content: '';
-  background-image: url(https://image.flaticon.com/icons/png/128/109/109612.png);
+  background-image: url('../icon/arrow.svg');
   display: block;
   margin: 0 auto;
   background-size: 100%;
   background-repeat: no-repeat;
 }
-.color input {
-  background-color: #f1f1f1;
+
+h1 {
+  font-family: 'Playfair display', serif;
 }
+
+h2 {
+  font-family: 'Playfair display', serif;
+}
+
+#right-column {
+  width: 50%;
+  display: grid;
+  place-content: center;
+}
+
+/* ###############################
+DROP FIELD STYLES 
+Credit: ramniwassharma from https://bootsnipp.com/snippets/DOXy4 */
+
+.files {
+  position: relative;
+}
+
+.files input {
+  border-radius: 0.8rem;
+  outline: 1px solid #8d8c97;
+  outline-offset: -10px;
+  text-align: center !important;
+  width: 100%;
+  height: calc(70vh - 3.6rem);
+  padding: 20vh 20% 0 20%;
+}
+
+.files:after {
+  pointer-events: none;
+  position: absolute;
+  bottom: 40%;
+  left: 0;
+  width: 50px;
+  right: 0;
+  height: 56px;
+  content: '';
+  background-image: url('../icon/icon.svg');
+  display: block;
+  margin: 0 auto;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.color input {
+  background-color: #cdccdb;
+}
+
 .files:before {
   position: absolute;
-  bottom: 10px;
+  bottom: 25%;
   left: 0;
   pointer-events: none;
   width: 100%;
   right: 0;
   height: 57px;
-  content: ' Ou solte o arquivo aqui. ';
+  content: ' Solte o arquivo aqui. ';
   display: block;
   margin: 0 auto;
-  color: #2ea591;
+  color: #273038;
   font-weight: 600;
   text-align: center;
+}
+
+/* END OF DROP FIELD STYLES
+############################# */
+
+#listWrapper {
+  width: 70vw;
+  height: 80vh;
+  background: #f3eeff;
+  padding: 2rem;
+  z-index: 0;
+
+  display: none;
+}
+
+#buttons {
+  position: relative;
+  width: 30%;
+}
+
+#buttons .reloadPage {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-size: 16px;
+  font-weight: bold;
+  background: none;
+  border: none;
+  color: #273038;
+  padding-top: 35px;
+  margin: 25px;
+  cursor: pointer;
+  z-index: 10;
+  opacity: 50%;
+  transition: opacity 300ms ease-in-out;
+}
+
+#buttons .reloadPage:hover {
+  opacity: 100%;
+}
+
+#buttons .reloadPage:after {
+  position: absolute;
+  width: 44px;
+  height: 30px;
+  top: 0;
+  left: 0;
+  content: '';
+  background: url('../icon/back-arrow.svg');
+  background-position: center center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#buttons .download {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: 100px;
+  background: #273038;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 0.8rem;
+  display: flex;
+  transition: background 300ms ease-in-out;
+}
+#buttons .download img {
+  width: 100px;
+}
+
+#buttons .download:hover {
+  background: #000;
+}
+
+#list {
+  width: 70%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  overflow-y: auto;
+}
+
+#list div {
+  display: flex;
+  justify-content: start;
+}
+
+#list div h3 {
+  margin-right: 35px;
+}
+
+#list ul li {
+  list-style: none;
+  text-align: left;
+  margin: 1rem 0;
+}
+#list .participants {
+  font-size: 20px;
+  font-weight: bold;
 }
