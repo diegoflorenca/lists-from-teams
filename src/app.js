@@ -69,12 +69,14 @@ const showResultHandler = (names, meetingDate, started, ended) => {
   const endEl = document.querySelector('.end');
   const ulEl = document.querySelector('ul');
   const participantsEl = document.querySelector('.participants');
-
   const dropFieldEl = document.querySelector('#dropField');
+
   // Hide the file drop field
   dropFieldEl.style.display = 'none';
   // Show the download button
   downloadButton.style.display = 'block';
+  // Show back button
+  reloadPage.style.display = 'block';
 
   const start = `Início: ${started.format('HH:mm')}`;
   const end = `Término: ${ended.format('HH:mm')}`;
@@ -173,4 +175,9 @@ const nameFormatHandler = (nome) => {
   }
 
   return nome;
+};
+
+// Reload Page "back"
+const reloadPageHandler = () => {
+  location.reload();
 };
