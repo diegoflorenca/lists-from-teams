@@ -5,11 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lista de Presença</title>
     <link rel="stylesheet" href="./styles/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Roboto&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div id="wrapper">
       <header>
         <h1>Visualizar listagens do Microsoft Teams</h1>
+        <p>
+          Este site foi criado com a a intensão de facilitar a leitura das
+          listas de participantes das reuniões geradas pelo Teams
+        </p>
       </header>
 
       <div class="files color" id="dropField">
@@ -18,15 +26,17 @@
 
       <section id="list">
         <h2 class="date"></h2>
-        <h3 class="start"></h3>
-        <h3 class="end"></h3>
+        <div>
+          <h3 class="start"></h3>
+          <h3 class="end"></h3>
+        </div>
         <ul></ul>
         <h3 class="participants"></h3>
       </section>
 
       <div id="buttons">
-        <button class="download">Baixar para Excel</button>
         <button class="reloadPage">Voltar</button>
+        <button class="download">Baixar para Excel</button>
       </div>
     </div>
 
