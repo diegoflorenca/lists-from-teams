@@ -1,3 +1,6 @@
+// Store all data to be converted in a excel file
+const tableStructure = [];
+
 const changeFileHandler = (e) => {
   // Take the file from event.target
   const file = e.target.files[0];
@@ -53,7 +56,6 @@ const dataHandler = (rawData) => {
       endedTime = thisTime;
     }
   });
-  //console.log(startedTime.format(format), endedTime.format(format));
 
   // Sort names array in alphabetic order
   names.sort();
@@ -67,14 +69,75 @@ const showResultHandler = (names, meetingDate, started, ended) => {
   const endEl = document.querySelector('.end');
   const ulEl = document.querySelector('ul');
 
-  dateEl.innerHTML = meetingDate;
-  startEl.innerHTML = started;
-  endEl.innerHTML = ended;
+  const start = `Início: ${started.format('HH:mm')}`;
+  const end = `Término: ${ended.format('HH:mm')}`;
+
+  dateEl.innerHTML = `Data da Reunião: ${meetingDate}`;
+  startEl.innerHTML = start;
+  endEl.innerHTML = end;
+
+  // Save this information into tableStructure variable for the table header
+  tableStructure.push(['Data da Reunião:', meetingDate]);
+  tableStructure.push([start, end]);
+  tableStructure.push(['Presentes:']);
+
+  console.log(tableStructure);
 
   names.forEach((name) => {
     const li = document.createElement('li');
     const nameText = document.createTextNode(name);
     li.appendChild(nameText);
     ulEl.appendChild(li);
+    // Insert this name into tableStructure
+    tableStructure.push([name]);
   });
+  // Total of names in the names array is equal to the total of participants of the meeting
+  tableStructure.push(['Participantes', names.length]);
+};
+
+const createSheetHandler = () => {
+  // Credits: TK from https://redstapler.co/sheetjs-tutorial-create-xlsx/
+  let wb = XLSX.utils.book_new();
+  // Save the current date
+  currentDate = moment(new Date()).format('YYYY,MM,DD');
+  wb.Props = {
+    Title: 'Lista de Presença - Reunião Teams',
+    subject: 'Gerada Automaticamente',
+    Author: 'Diego Felipe Florença',
+    CreateDate: currentDate,
+  };
+  wb.SheetNames.push('Lista de Presença');
+  // Build the table structure
+  let ws_data = tableStructure;
+  let ws = XLSX.utils.aoa_to_sheet(ws_data);
+  wb.Sheets['Lista de Presença'] = ws;
+
+  // Exporting
+  let wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+  // File download
+  saveToFileHandler('chamada-', wbout);
+};
+
+// Convert the binary data into octet
+const convertToOctet = (s) => {
+  // convert s to arrayBuffer
+  let buf = new ArrayBuffer(s.length);
+  // Create uint8array as viewer
+  let view = new Uint8Array(buf);
+  for (var i = 0; i < s.length; i++) {
+    // Convert to octet
+    view[i] = s.charCodeAt(i) & 0xff;
+  }
+  return buf;
+};
+
+const saveToFileHandler = (name, wbout) => {
+  const rnd = Math.floor(Math.random(100) * 100);
+  const hash = moment(new Date()).format('MMDD') + '-' + rnd + '.xlsx';
+  const fileName = name + hash;
+  saveAs(
+    new Blob([convertToOctet(wbout)], { type: 'application/octet-stream' }),
+    fileName
+  );
 };
