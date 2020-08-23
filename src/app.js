@@ -70,6 +70,9 @@ const showResultHandler = (names, meetingDate, started, ended) => {
   const ulEl = document.querySelector('ul');
   const participantsEl = document.querySelector('.participants');
 
+  const dropFieldEl = document.querySelector('#dropField');
+  // Hide the file drop field
+  dropFieldEl.style.display = 'none';
   // Show the download button
   downloadButton.style.display = 'block';
 

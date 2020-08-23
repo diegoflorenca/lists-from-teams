@@ -4,15 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lista de Presença</title>
+    <link rel="stylesheet" href="./styles/styles.css" />
   </head>
   <body>
-    <input type="file" id="file-input" />
+    <div class="files color" id="dropField">
+      <input name="file" type="file" id="file-input" />
+    </div>
 
     <h1></h1>
     <h2 class="date"></h2>
     <h3 class="start"></h3>
     <h3 class="end"></h3>
     <ul></ul>
+    <h3 class="participants"></h3>
     <button class="download">Download Excel</button>
 
     <script src="./js/moment.js"></script>
@@ -20,9 +24,8 @@
     <script src="./js/FileSaver.min.js"></script>
     <script src="./app.js"></script>
     <script>
-      document
-        .getElementById('file-input')
-        .addEventListener('change', changeFileHandler, false);
+      const inputField = document.getElementById('file-input');
+      inputField.addEventListener('change', changeFileHandler, false);
 
       const downloadButton = document.querySelector('.download');
       downloadButton.style.display = 'none';
